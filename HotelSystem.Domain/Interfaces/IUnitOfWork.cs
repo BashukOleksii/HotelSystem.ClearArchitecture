@@ -1,4 +1,6 @@
-﻿public interface IUnitOfWork
+﻿namespace HotelSystem.Domain.Interfaces;
+
+public interface IUnitOfWork
 {
     Task<int> SaveChangesAsync(
         CancellationToken cancellationToken = default);
