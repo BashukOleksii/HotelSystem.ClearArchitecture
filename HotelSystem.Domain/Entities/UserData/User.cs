@@ -1,4 +1,4 @@
-﻿using System.Net.Mail;
+using System.Net.Mail;
 using HotelSystem.Domain.Constants;
 using HotelSystem.Domain.Exceptions;
 
@@ -11,6 +11,7 @@ public sealed class User
     public Guid Id { get; private set; }
     public string Username { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
+    public string? PhoneNumber { get; private set; }
     public string PasswordHash { get; private set; } = string.Empty;
     public bool IsBlocked { get; private set; }
     public DateTimeOffset CreatedAt { get; private set; }
@@ -24,7 +25,8 @@ public sealed class User
         string email,
         string passwordHash,
         Role userRole,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAt,
+        string? phoneNumber = null)
     {
         if (userRole is null || userRole.Name != RoleNames.User)
         {
@@ -35,6 +37,7 @@ public sealed class User
 
         var normalizedUsername = NormalizeUsername(username);
         var normalizedEmail = NormalizeEmail(email);
+        var normalizedPhone = NormalizePhone(phoneNumber);
 
         EnsurePasswordHash(passwordHash);
 
@@ -43,6 +46,7 @@ public sealed class User
             Id = Guid.NewGuid(),
             Username = normalizedUsername,
             Email = normalizedEmail,
+            PhoneNumber = normalizedPhone,
             PasswordHash = passwordHash,
             CreatedAt = createdAt
         };
@@ -52,13 +56,15 @@ public sealed class User
         return user;
     }
 
-    public void UpdateProfile(string username, string email)
+    public void UpdateProfile(string username, string email, string? phoneNumber = null)
     {
         var normalizedUsername = NormalizeUsername(username);
         var normalizedEmail = NormalizeEmail(email);
+        var normalizedPhone = NormalizePhone(phoneNumber);
 
         Username = normalizedUsername;
         Email = normalizedEmail;
+        PhoneNumber = normalizedPhone;
     }
 
     public bool HasRole(string roleName)
@@ -142,6 +148,15 @@ public sealed class User
                 "Вкажіть коректну адресу електронної пошти до 254 символів.");
         }
 
+        return normalized;
+    }
+
+    private static string? NormalizePhone(string? phoneNumber)
+    {
+        var normalized = phoneNumber?.Trim();
+        if (string.IsNullOrEmpty(normalized)) return null;
+        if (normalized.Length > 30)
+            throw new DomainValidationException(nameof(phoneNumber), "Телефон має містити до 30 символів.");
         return normalized;
     }
 
