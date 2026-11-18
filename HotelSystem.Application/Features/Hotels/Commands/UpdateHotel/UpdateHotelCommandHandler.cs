@@ -32,7 +32,7 @@ public sealed class UpdateHotelCommandHandler(
             request.HotelId,
             cancellationToken);
 
-        if (hotel is null)
+        if (hotel is null || hotel.IsDeleted)
         {
             throw new NotFoundException(
                 "Готель не знайдено.");

@@ -9,6 +9,4 @@ public interface IHotelRepository
         CancellationToken cancellationToken = default);
 
     void Add(Hotel hotel);
-
-    void Remove(Hotel hotel);
 }
