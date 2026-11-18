@@ -1,0 +1,40 @@
+# Visual Studio — local cache and user preferences
+.vs/
+*.user
+*.suo
+*.rsuser
+*.userosscache
+*.sln.docstates
+
+# .NET build output
+[Bb]in/
+[Oo]bj/
+artifacts/
+*.binlog
+
+# Test runs and coverage
+[Tt]est[Rr]esults/
+*.trx
+*.coverage
+*.coveragexml
+coverage.cobertura.xml
+coverage.opencover.xml
+
+# NuGet package output and legacy restore folders
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# ASP.NET Core — local configuration and publish credentials
+appsettings.Local.json
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pubxml.user
+*.publishsettings
+
+# Windows Explorer
+Thumbs.db
+Desktop.ini
