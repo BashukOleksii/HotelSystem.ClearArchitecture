@@ -1,12 +1,13 @@
 using HotelSystem.Domain.Enums;
 using HotelSystem.Domain.Exceptions;
+using HotelSystem.Domain.Rules;
 
 namespace HotelSystem.Domain.Entities;
 
 public sealed class Booking
 {
     private const decimal MaximumTotalPrice =
-        9_999_999_999_999_999.99m;
+        BookingRules.MaximumTotalPrice;
 
     public Guid Id { get; private set; }
     public Guid UserId { get; private set; }
@@ -15,6 +16,7 @@ public sealed class Booking
     public DateOnly CheckIn { get; private set; }
     public DateOnly CheckOut { get; private set; }
 
+    public decimal PricePerNight { get; private set; }
     public decimal TotalPrice { get; private set; }
 
     public BookingStatus Status { get; private set; }
@@ -54,6 +56,7 @@ public sealed class Booking
             RoomId = room.Id,
             CheckIn = checkIn,
             CheckOut = checkOut,
+            PricePerNight = room.CostPerNight,
             TotalPrice = totalPrice,
             Status = BookingStatus.Confirmed,
             CreatedAt = createdAt
@@ -93,11 +96,15 @@ public sealed class Booking
 
         CheckIn = checkIn;
         CheckOut = checkOut;
+        PricePerNight = room.CostPerNight;
         TotalPrice = totalPrice;
     }
 
     public void Cancel()
     {
+        if (Status == BookingStatus.Cancelled)
+            return;
+
         Status = BookingStatus.Cancelled;
     }
 
@@ -124,19 +131,7 @@ public sealed class Booking
         DateOnly checkOut,
         DateOnly currentDate)
     {
-        if (checkIn < currentDate)
-        {
-            throw new DomainValidationException(
-                nameof(checkIn),
-                "Дата заїзду не може бути в минулому.");
-        }
-
-        if (checkOut <= checkIn)
-        {
-            throw new DomainValidationException(
-                nameof(checkOut),
-                "Дата виїзду має бути пізнішою за дату заїзду.");
-        }
+        BookingRules.EnsureDates(checkIn, checkOut, currentDate);
 
         var nights = checkOut.DayNumber - checkIn.DayNumber;
         var totalPrice = pricePerNight * nights;
