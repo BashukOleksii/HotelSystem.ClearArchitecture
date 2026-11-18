@@ -1,4 +1,4 @@
-﻿using HotelSystem.Domain.Enums;
+using HotelSystem.Domain.Enums;
 using HotelSystem.Domain.Exceptions;
 
 namespace HotelSystem.Domain.Entities;
@@ -110,7 +110,7 @@ public sealed class Booking
                 "Вкажіть номер готелю.");
         }
 
-        if (!room.IsAvailable)
+        if (room.IsDeleted || !room.IsAvailable)
         {
             throw new DomainValidationException(
                 nameof(room),

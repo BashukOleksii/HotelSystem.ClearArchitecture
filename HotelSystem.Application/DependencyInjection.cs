@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HotelSystem.Application.Common.Time;
 using HotelSystem.Application.Common.Behaviors;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,8 @@ public static class DependencyInjection
 
         services.TryAddSingleton<TimeProvider>(
             TimeProvider.System);
+
+        services.TryAddSingleton<BookingCalendar>();
 
         return services;
     }
