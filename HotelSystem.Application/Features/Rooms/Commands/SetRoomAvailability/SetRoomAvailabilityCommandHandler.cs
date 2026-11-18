@@ -3,8 +3,7 @@ using HotelSystem.Domain.Interfaces;
 using MediatR;
 
 namespace HotelSystem.Application.Features.Rooms.Commands.SetRoomAvailability;
-public sealed class SetRoomAvailabilityCommandHandler(IUserRepository users, IHotelRepository hotels, IRoomRepository rooms, IUnitOfWork unitOfWork)
-    : IRequestHandler<SetRoomAvailabilityCommand>
+public sealed class SetRoomAvailabilityCommandHandler(IUserRepository users, IHotelRepository hotels, IRoomRepository rooms, IUnitOfWork unitOfWork) : IRequestHandler<SetRoomAvailabilityCommand>
 {
     public async Task Handle(SetRoomAvailabilityCommand request, CancellationToken cancellationToken)
     {

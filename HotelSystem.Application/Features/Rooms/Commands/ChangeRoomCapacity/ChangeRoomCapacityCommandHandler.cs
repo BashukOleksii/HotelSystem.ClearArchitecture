@@ -3,8 +3,7 @@ using HotelSystem.Domain.Interfaces;
 using MediatR;
 
 namespace HotelSystem.Application.Features.Rooms.Commands.ChangeRoomCapacity;
-public sealed class ChangeRoomCapacityCommandHandler(IUserRepository users, IHotelRepository hotels, IRoomRepository rooms, IUnitOfWork unitOfWork) 
-    : IRequestHandler<ChangeRoomCapacityCommand>
+public sealed class ChangeRoomCapacityCommandHandler(IUserRepository users, IHotelRepository hotels, IRoomRepository rooms, IUnitOfWork unitOfWork) : IRequestHandler<ChangeRoomCapacityCommand>
 {
     public async Task Handle(ChangeRoomCapacityCommand request, CancellationToken cancellationToken)
     {

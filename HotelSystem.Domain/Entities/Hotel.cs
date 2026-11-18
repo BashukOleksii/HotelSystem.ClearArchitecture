@@ -1,5 +1,6 @@
 ﻿using HotelSystem.Domain.Enums;
 using HotelSystem.Domain.Exceptions;
+using HotelSystem.Domain.Rules;
 using HotelSystem.Domain.Services;
 using HotelSystem.Domain.ValueObjects;
 
@@ -19,8 +20,7 @@ public sealed class Hotel
     public bool IsDeleted { get; private set; }
 
     public DateTimeOffset CreatedAt { get; private set; }
-
-    private const int MaximumPhotoCount = 10;
+    public Guid Version { get; private set; }
 
     private readonly List<Photo> _photos = [];
 
@@ -107,25 +107,38 @@ public sealed class Hotel
         Description = normalizedDescription;
 
         ModerationStatus = HotelModerationStatus.Pending;
+        Touch();
     }
 
     public void Approve()
     {
         EnsureNotDeleted();
 
+        if (ModerationStatus == HotelModerationStatus.Approved)
+            return;
+
         ModerationStatus = HotelModerationStatus.Approved;
+        Touch();
     }
 
     public void Reject()
     {
         EnsureNotDeleted();
 
+        if (ModerationStatus == HotelModerationStatus.Rejected)
+            return;
+
         ModerationStatus = HotelModerationStatus.Rejected;
+        Touch();
     }
 
     public void Delete()
     {
+        if (IsDeleted)
+            return;
+
         IsDeleted = true;
+        Touch();
     }
 
     public Photo AddPhoto(string storageKey)
@@ -135,9 +148,10 @@ public sealed class Hotel
         var photo = PhotoGalleryService.Add(
             _photos,
             storageKey,
-            MaximumPhotoCount);
+            HotelRules.MaximumPhotoCount);
 
         ModerationStatus = HotelModerationStatus.Pending;
+        Touch();
 
         return photo;
     }
@@ -151,9 +165,12 @@ public sealed class Hotel
             photoId);
 
         ModerationStatus = HotelModerationStatus.Pending;
+        Touch();
 
         return photo;
     }
+
+    private void Touch() => Version = Guid.NewGuid();
 
     private void EnsureNotDeleted()
     {
