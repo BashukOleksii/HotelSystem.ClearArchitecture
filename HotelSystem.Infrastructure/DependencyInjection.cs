@@ -1,4 +1,5 @@
 using AutoMapper;
+using HotelSystem.Application.Features.Photos.Queries;
 using HotelSystem.Application.Features.Hotels.Queries;
 using HotelSystem.Application.Features.Rooms.Queries;
 using HotelSystem.Application.Features.Bookings.Queries;
@@ -64,6 +65,7 @@ public static class DependencyInjection
         services.TryAddScoped<IBookingReadService, BookingReadService>();
         services.TryAddScoped<IReviewReadService, ReviewReadService>();
         services.TryAddScoped<IUserReadService, UserReadService>();
+        services.TryAddScoped<IPhotoReferenceReader, PhotoReferenceReader>();
         return services;
     }
 
