@@ -7,7 +7,18 @@ using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddLocalDevelopmentConfiguration(builder.Environment, args);
 builder.Services.AddHotelApi(builder.Configuration, builder.Environment);
-var app = builder.Build();
+await using var app = builder.Build();
+
+if (builder.Configuration.GetValue<bool>("SeedDemo"))
+{
+    if (!app.Environment.IsDevelopment())
+        throw new InvalidOperationException("Демонстраційні дані можна додавати лише в Development.");
+
+    await using var scope = app.Services.CreateAsyncScope();
+    var result = await scope.ServiceProvider.GetRequiredService<DemoDataSeeder>().SeedAsync();
+    Console.WriteLine($"Демо-дані збережено. Додано власників: {result.Owners}; готелів: {result.Hotels}; номерів: {result.Rooms}.");
+    return;
+}
 
 app.UseExceptionHandler();
 app.UseStatusCodePages(async status =>
