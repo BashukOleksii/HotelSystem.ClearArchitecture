@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="../../../../../../../../college/software_architecture/LW2/CleanArchitecture/HotelSystem.API/HotelSystem.API.csproj" />
   <Project Path="../../../../../../../../college/software_architecture/LW2/CleanArchitecture/HotelSystem.Application/HotelSystem.Application.csproj" />
   <Project Path="../../../../../../../../college/software_architecture/LW2/CleanArchitecture/HotelSystem.Domain/HotelSystem.Domain.csproj" />
