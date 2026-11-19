@@ -30,6 +30,7 @@ public static class SecurityDependencyInjection
         services.TryAddSingleton<IPasswordHasher, BCryptPasswordHasher>();
         services.TryAddSingleton<IAccessTokenIssuer, JwtAccessTokenIssuer>();
         services.TryAddScoped<BootstrapAdminSeeder>();
+        services.TryAddScoped<DemoDataSeeder>();
         return services;
     }
 }
