@@ -1,9 +1,11 @@
 using HotelSystem.API;
+using HotelSystem.API.Configuration;
 using HotelSystem.API.Errors;
 using HotelSystem.Infrastructure.Persistence.Seeding;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddLocalDevelopmentConfiguration(builder.Environment, args);
 builder.Services.AddHotelApi(builder.Configuration, builder.Environment);
 var app = builder.Build();
 

@@ -4,8 +4,12 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>HotelSystem.ClearArchitecture.Api.Development</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Local.json;appsettings.Local.example.json"
+             CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12">

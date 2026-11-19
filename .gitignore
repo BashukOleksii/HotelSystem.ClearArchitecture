@@ -28,12 +28,16 @@ coverage.opencover.xml
 
 # ASP.NET Core — local configuration and publish credentials
 appsettings.Local.json
+/HotelSystem_Final_Configuration.zip
 .env
 .env.*
 !.env.example
 !.env.sample
 *.pubxml.user
 *.publishsettings
+
+# Runtime uploads belong to the local machine, not source control.
+HotelSystem.API/App_Data/
 
 # Windows Explorer
 Thumbs.db
