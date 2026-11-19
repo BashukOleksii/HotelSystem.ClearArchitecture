@@ -54,7 +54,7 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelSystem API", Version = "v1", Description = "Крок 1 API: користувачі, JWT та отримання фотографій." });
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelSystem API", Version = "v1", Description = "Готелі, кімнати, бронювання, відгуки, користувачі та фотографії." });
             options.CustomSchemaIds(SchemaId);
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             { Type = SecuritySchemeType.Http, Scheme = "bearer", BearerFormat = "JWT", Description = "Вставте accessToken без префікса Bearer." });

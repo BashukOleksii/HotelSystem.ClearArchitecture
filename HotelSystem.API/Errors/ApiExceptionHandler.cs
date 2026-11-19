@@ -35,6 +35,8 @@ public sealed class ApiExceptionHandler(ILogger<ApiExceptionHandler> logger) : I
                 ForbiddenOperationException => (403, "Недостатньо прав для виконання операції."),
                 NotFoundException => (404, "Ресурс не знайдено."),
                 ConflictException => (409, "Конфлікт даних."),
+                BadHttpRequestException { StatusCode: 413 } => (413, "Завеликий HTTP-запит."),
+                BadHttpRequestException => (400, "Некоректний HTTP-запит."),
                 _ => (500, "Внутрішня помилка сервера.")
             };
             problem = ApiProblems.Create(context, status, title,

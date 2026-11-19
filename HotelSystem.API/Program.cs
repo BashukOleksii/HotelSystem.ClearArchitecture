@@ -27,7 +27,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// Apply existing migrations separately; bootstrap does not create or migrate the database.
 if (app.Services.GetRequiredService<IOptions<BootstrapAdminOptions>>().Value.Enabled)
 {
     await using var scope = app.Services.CreateAsyncScope();
